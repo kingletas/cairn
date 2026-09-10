@@ -1,0 +1,36 @@
+{
+  "note": "What a fresh vault starts with. Everything here is a default, not a recommendation, and every one of them is a row you can change. Nothing that identifies you is in this file, because nothing about you exists until you run setup.",
+  "settings": {
+    "maxPostingAgeDays": 30,
+    "requireFirstPartyPay": false,
+    "excludedEmployers": [],
+    "harvestCadenceHours": null,
+    "requestDelayMs": 1500,
+    "sequentialFetch": false,
+    "identifyAs": "cairn",
+    "keepDroppedHashes": true,
+    "theme": "system",
+    "accent": "pine",
+    "density": "comfortable",
+    "textSize": "default",
+    "weekStartsOn": "monday",
+    "lockAfterMinutes": 15,
+    "screenShare": false,
+    "notify": false,
+    "quietFrom": 1320,
+    "quietTo": 480,
+    "documentsHeld": "copied",
+    "language": "en",
+    "stageLabels": {},
+    "stageColours": {}
+  },
+  "why": {
+    "harvestCadenceHours": "null means Cairn fetches only when you ask. Anything on a schedule is a request you did not press a button for, so it is off until you turn it on.",
+    "requestDelayMs": "A second and a half between requests. Slower is politer to the boards you are reading and harder to mistake for a scraper.",
+    "sequentialFetch": "Off, so employer boards and listing sites are read side by side. They are different hosts and the gate asks each one no more often than the request delay either way, so this is two queues rather than a burst. Turn it on to finish one kind before starting the other.",
+    "requireFirstPartyPay": "Off by default so you still see roles whose figure came from a listing site -- they are shown and labelled rather than hidden. Turn it on to rank only what an employer published themselves.",
+    "lockAfterMinutes": "The vault locks itself after fifteen idle minutes and the key is wiped. Set it to null to lock only when you ask.",
+    "stageLabels": "Empty, so the five stages carry Cairn's own words. Rename any of them to whatever your own process calls it; the set of five is fixed, because three of them do something rather than say something.",
+    "language": "English, which is the language every phrase is written in. Spanish, French and Portuguese ship beside it. A catalogue is a file of phrases keyed by the English, so anything it does not carry shows in English rather than as a blank or a key -- and you can drop your own into lang/ in your vault."
+  }
+}

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Cairn
+GenericName=Job Application Tracker
+Comment=Keep a job search on your own machine, encrypted, and see what has left it
+Exec=@LAUNCHER@
+Icon=com.kingletas.Cairn
+Terminal=false
+Categories=Office;ProjectManagement;GTK;
+Keywords=jobs;applications;career;tracker;
+StartupNotify=true
+StartupWMClass=Cairn

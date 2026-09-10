@@ -1,0 +1,25 @@
+[package]
+name = "cairn-keyring"
+version = "1.0.0"
+edition = "2021"
+license = "MIT"
+description = "Passphrase handling, Argon2id derivation and key zeroing for Cairn"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+napi = { version = "2", default-features = false, features = ["napi4"] }
+napi-derive = "2"
+argon2 = "0.5"
+zeroize = { version = "1", features = ["zeroize_derive"] }
+rand = "0.8"
+hex = "0.4"
+
+[build-dependencies]
+napi-build = "2"
+
+[profile.release]
+lto = true
+strip = "symbols"

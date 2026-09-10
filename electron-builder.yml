@@ -1,0 +1,100 @@
+# What a distributable Cairn is made of.
+#
+# The app reads `defaults/` and `native/` by walking up from `dist/main`, so both go in
+# beside it and the paths hold inside the archive exactly as they do in a checkout.
+appId: com.kingletas.Cairn
+productName: Cairn
+copyright: Copyright © 2026 Luis Tineo
+
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - dist/**
+  - defaults/**
+  - native/**
+  - docs/**
+  - package.json
+
+# A .node file cannot be loaded from inside an asar archive. Electron redirects a read
+# of an unpacked path on its own, so nothing in the app has to know which it got.
+asarUnpack:
+  - native/**
+
+# Nothing here is signed. A signing identity is a paid account per platform and a
+# secret in CI, and shipping unsigned with the warning written down is honest where
+# claiming a signature we do not have would not be.
+# Apple silicon only. The key module and the database binding are built against the
+# runner, so an x64 build from an arm64 Mac would install and then fail to open a vault.
+mac:
+  icon: build/icons/512x512.png
+  category: public.app-category.productivity
+  identity: null
+  target:
+    - target: dmg
+      arch: [arm64]
+    - target: zip
+      arch: [arm64]
+
+win:
+  icon: build/icons/512x512.png
+  target:
+    - target: nsis
+      arch: [x64, arm64]
+    - target: portable
+      arch: [x64]
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  perMachine: false
+
+linux:
+  icon: build/icons
+  # Without this the window manager cannot tie a running window to the desktop entry,
+  # so the app shows up under a generic icon in the dock.
+  syncDesktopName: true
+  category: Office
+  synopsis: Job application tracker that keeps everything on your own machine
+  description: >-
+    Cairn keeps a job search in one encrypted file on your own machine. There is no
+    account and no server. Nothing is fetched until you ask, and every request it has
+    ever made is listed in the app.
+  desktop:
+    entry:
+      Name: Cairn
+      GenericName: Job Application Tracker
+      Keywords: jobs;applications;career;tracker;
+      StartupWMClass: Cairn
+  target:
+    - target: AppImage
+      arch: [x64, arm64]
+    - target: deb
+      arch: [x64, arm64]
+    - target: rpm
+      arch: [x64]
+    - target: tar.gz
+      arch: [x64, arm64]
+
+rpm:
+  # rpmbuild stamps the machine that built it into the package. A release is built on a
+  # runner and that name is nobody's, but one built by hand carries the workstation's
+  # hostname to everybody who installs it.
+  fpm:
+    - --rpm-rpmbuild-define
+    - _buildhost cairn-build
+
+deb:
+  # A .deb has to name somebody. The GitHub noreply address discloses nothing the
+  # repository does not already say out loud.
+  maintainer: Luis Tineo <kingletas@users.noreply.github.com>
+  depends:
+    - libgtk-3-0
+    - libnotify4
+    - libnss3
+    - libxss1
+    - libxtst6
+    - xdg-utils
+    - libatspi2.0-0
+    - libsecret-1-0

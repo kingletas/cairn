@@ -1,0 +1,291 @@
+#!/usr/bin/env bash
+#
+# cairn -- start the app.
+#
+# Usage:
+#   cairn                 open Cairn
+#   cairn --rebuild       rebuild before starting, after pulling changes
+#   cairn --where         print where the code and the vault live, and stop
+#   cairn --check-sandbox say whether the sandbox is usable, and stop
+#   cairn --software      skip the graphics card entirely
+#   cairn --try-graphics  forget a past crash and use the graphics card again
+#   cairn --crashes       print what Cairn recorded about the last crashes
+#
+# Environment overrides:
+#   CAIRN_HOME      the checkout to run from (default: the one this was installed from)
+#   CAIRN_ELECTRON  the binary to run (default: the one in this checkout)
+#
+# There is no separate binary. This runs the app out of its checkout, which is why a
+# rebuild after `git pull` is one flag rather than a reinstall.
+
+set -euo pipefail
+
+HERE="${CAIRN_HOME:-@CAIRN_HOME@}"
+
+# Once a machine has shown it crashes, stop making it prove it every time. Recovering
+# from a segfault on each launch is a worse experience than simply not using the
+# graphics card, and the difference for a page of text is not worth one crash.
+state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/cairn"
+crashed_before="$state_dir/graphics-crashed"
+
+# The same file the app writes to. Electron decides where its logs go per platform, and
+# a launcher keeping its own copy somewhere else is two accounts of one crash.
+log_dir="${XDG_CONFIG_HOME:-$HOME/.config}/cairn/logs"
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  sed -n '3,16p' "$0" | sed 's/^# \{0,1\}//'
+  exit 0
+fi
+
+if [[ ! -d "$HERE" ]]; then
+  echo "cairn: the checkout is not at $HERE any more." >&2
+  echo "  Set CAIRN_HOME to where it is now, or run make install there again." >&2
+  exit 1
+fi
+
+if [[ "${1:-}" == "--where" ]]; then
+  echo "code:  $HERE"
+  echo "vault: ${XDG_CONFIG_HOME:-$HOME/.config}/cairn/vault"
+  exit 0
+fi
+
+# Chromium's sandbox helper has to be owned by root and setuid, and npm cannot make it
+# so -- it installs as you. Without it Chromium aborts with a fatal error that says
+# nothing about what to do, which is what this exists to replace.
+#
+# Cairn does not start unsandboxed. It holds a resume, a pay figure and a list of
+# employers somebody would rather avoid; turning the sandbox off to get past a
+# permissions message is the wrong trade, and one nobody would remember making.
+helper="$HERE/node_modules/electron/dist/chrome-sandbox"
+
+# The setuid helper is a Linux arrangement. macOS sandboxes a renderer through its own
+# kernel facilities and ships no chrome-sandbox at all, so demanding one there refused
+# to start on every Mac -- and `stat -c` is GNU, so the check could not even have read
+# the file it was asking about.
+sandbox_ready() {
+  [[ "$(uname -s)" == "Linux" ]] || return 0
+  [[ -f "$helper" ]] || return 1
+  local owner mode
+  owner="$(stat -c '%U' "$helper" 2>/dev/null || echo '?')"
+  mode="$(stat -c '%a' "$helper" 2>/dev/null || echo '?')"
+  [[ "$owner" == "root" && "$mode" == "4755" ]]
+}
+
+explain_sandbox() {
+  cat >&2 <<EXPLAIN
+cairn: the sandbox helper is not set up, so Cairn will not start.
+
+  Chromium isolates the parts of the app that read a web page, and the helper that
+  does it has to be owned by root. npm installs it as you, which is why this is a
+  one-time step rather than something that just works.
+
+  Run this once:
+
+    sudo chown root:root '$helper' && sudo chmod 4755 '$helper'
+
+  You will need it again after any 'npm install' that replaces Electron, because that
+  puts the file back the way npm makes it. 'cairn --check-sandbox' says whether it is
+  currently set up.
+
+  Cairn will not start without it. Running unsandboxed is an option nobody remembers
+  choosing, and this app holds enough that it should not be the quiet default.
+EXPLAIN
+}
+
+if [[ "${1:-}" == "--crashes" ]]; then
+  log="$log_dir/crashes.log"
+  if [[ -f "$log" ]]; then
+    tail -40 "$log"
+  else
+    echo "Nothing recorded yet."
+  fi
+  # A process that segfaults writes nothing about it, so when the log above ends at
+  # 'started' the dump Chromium's crash handler wrote is the only record of what died.
+  dumps="${XDG_CONFIG_HOME:-$HOME/.config}/cairn/Crashpad"
+  count=$(find "$dumps" -name '*.dmp' 2>/dev/null | wc -l)
+  if (( count > 0 )); then
+    echo
+    echo "$count crash dump(s) under $dumps, newest last:"
+    find "$dumps" -name '*.dmp' -printf '  %TY-%Tm-%Td %TH:%TM  %f\n' 2>/dev/null | sort | tail -10
+    echo "  A dump holds memory from the moment of the crash, which can include an open vault."
+    echo "  Read it with a minidump tool; do not attach one to a public report."
+  fi
+  if [[ -f "$crashed_before" ]]; then
+    echo
+    echo "This machine is set to skip the graphics card, from a crash on $(cat "$crashed_before")."
+    echo "  Every crash recorded here was a native module being rewritten under the running"
+    echo "  app by its own build, which is fixed. If these are all from before that, the"
+    echo "  graphics card was never the cause and skipping it costs you the sharper path."
+    echo "  'cairn --try-graphics' forgets this and uses it again."
+  fi
+  exit 0
+fi
+
+if [[ "${1:-}" == "--try-graphics" ]]; then
+  if rm -f "$crashed_before" 2>/dev/null; then
+    echo "cairn: forgotten. The next start will use the graphics card again."
+  fi
+  exit 0
+fi
+
+if [[ "${1:-}" == "--check-sandbox" ]]; then
+  if sandbox_ready; then
+    if [[ "$(uname -s)" == "Linux" ]]; then
+      echo "sandbox: ready ($helper is root-owned and setuid)"
+    else
+      echo "sandbox: nothing to set up on $(uname -s) -- Chromium sandboxes without a setuid helper here"
+    fi
+    exit 0
+  fi
+  explain_sandbox
+  exit 1
+fi
+
+cd "$HERE"
+
+# A running Cairn has both native modules mapped, and a module rewritten under it
+# takes it down at its next query. So nothing is built while one is running.
+if [[ "${1:-}" == "--rebuild" ]] && pgrep -f "$HERE/node_modules/electron/dist/electron \." >/dev/null 2>&1; then
+  echo "cairn: Cairn is running. Quit it, then run 'cairn --rebuild' again." >&2
+  echo "       Rebuilding a module under a running app is what takes it down." >&2
+  exit 1
+fi
+
+# The native key module is not optional: without it there is no way to promise a key
+# is wiped on lock, so the app refuses to open a vault at all. Build it if it is
+# missing rather than failing at the passphrase prompt.
+if [[ "${1:-}" == "--rebuild" || ! -d native ]]; then
+  echo "cairn: building…" >&2
+  npm run native --silent
+fi
+
+if [[ "${1:-}" == "--rebuild" || ! -f dist/main/index.js ]]; then
+  npm run build --silent
+fi
+
+if ! sandbox_ready; then
+  explain_sandbox
+  exit 1
+fi
+
+# The real binary, not npm's wrapper around it. The wrapper catches a signal, prints
+# a line about it, and exits 1 -- so a crash arrives here looking like an ordinary
+# failure and the fallback below never fires. Running the binary means a segfault
+# comes back as 139, which is the whole basis of noticing one.
+electron="${CAIRN_ELECTRON:-$HERE/node_modules/electron/dist/electron}"
+
+if [[ ! -x "$electron" ]]; then
+  echo "cairn: Electron is not built at $electron. Run 'make deps' in $HERE." >&2
+  exit 1
+fi
+
+# Ubuntu 24.04 runs Wayland, and Electron defaults to XWayland unless told otherwise.
+# The hint lets it use Wayland directly where that works, which is both the sharper
+# path on a high-resolution screen and the one that avoids a class of driver crash.
+wayland=(--ozone-platform-hint=auto)
+
+# No graphics card at all. Slower to draw, and it works everywhere -- which is the
+# point of having it.
+#
+# X11 rather than Wayland here, and the two go together: Wayland composites on the
+# GPU, so asking for Wayland and no GPU in the same breath leaves Electron with
+# nothing to draw on and it exits without a window and without a word. XWayland does
+# not care, and a fallback that quietly fails is worse than no fallback.
+software=(--ozone-platform=x11 --disable-gpu --disable-gpu-compositing)
+
+args=()
+for arg in "$@"; do
+  [[ "$arg" == "--rebuild" || "$arg" == "--software" ]] && continue
+  args+=("$arg")
+done
+
+# The app cannot write down its own segfault, so the launcher does: which signal, how
+# long in, on which path. It goes in the same file as the app's own lines, so
+# `cairn --crashes` tells the whole story in one place.
+record_crash() {
+  local status=$1 elapsed=$2 path=$3
+  local signal
+  signal="SIG$(kill -l $(( status - 128 )) 2>/dev/null || echo "$(( status - 128 ))")"
+  mkdir -p "$log_dir"
+  echo "$(date -Iseconds) launcher: taken down by $signal after ${elapsed}s on the $path path (exit $status)" \
+    >> "$log_dir/crashes.log"
+  echo "$signal"
+}
+
+# Run rather than exec, so a crash on this path is written down too. It used to be
+# exec'd, which is why five crashes without the graphics card left no line anywhere.
+run_software() {
+  local started status elapsed
+  started=$(date +%s)
+  set +e
+  "$electron" . "${software[@]}" "${args[@]+"${args[@]}"}"
+  status=$?
+  set -e
+  elapsed=$(( $(date +%s) - started ))
+  if (( status > 128 )); then
+    local signal
+    signal=$(record_crash "$status" "$elapsed" software)
+    echo "cairn: $signal took the window down after ${elapsed}s, without the graphics card." >&2
+    echo "       'cairn --crashes' shows what Cairn recorded about it." >&2
+    echo "       Your records are unharmed -- the vault is written as you go." >&2
+  fi
+  exit "$status"
+}
+
+if [[ " $* " == *" --software "* || -f "$crashed_before" ]]; then
+  run_software
+fi
+
+# Try the graphics card, and fall back rather than leaving somebody with a crash and a
+# stack trace. A driver that takes the window down is not something a person can act
+# on, and on this class of hardware it is common enough to plan for.
+started=$(date +%s)
+
+# `set -e` is off for exactly this one call. A crash here is the thing being looked
+# for, not a reason to stop -- and `if ! cmd` does not work either, because the `!`
+# inverts the status and leaves $? as 0 inside the branch.
+set +e
+"$electron" . "${wayland[@]}" "${args[@]+"${args[@]}"}"
+status=$?
+set -e
+elapsed=$(( $(date +%s) - started ))
+
+# A clean quit is a zero. Anything above 128 is a signal, and a segfault from the
+# graphics driver lands there.
+#
+# Any crash is remembered, whenever it happens. The first version only counted one in
+# the opening half-minute, on the assumption that a driver either fails at startup or
+# not at all -- and it does not: a window can come up, work for ten minutes and then
+# be taken down mid-click. That crash is the same evidence about the same driver, and
+# treating it as unrelated meant the next launch went back to the thing that had just
+# failed.
+#
+# Only a *fast* crash is retried straight away, and that is the whole reason the
+# timing is still measured: restarting a session somebody was ten minutes into is not
+# a recovery, it is a second interruption.
+if (( status > 128 )); then
+  signal=$(record_crash "$status" "$elapsed" graphics)
+  # Its own directory now that the log has moved out of it. It used to be created by
+  # whatever wrote the log first, which is the kind of thing that keeps working right
+  # up until the log moves.
+  mkdir -p "$state_dir"
+  date -Iseconds > "$crashed_before"
+
+  # The graphics card is the usual suspect for a crash this early and not the only
+  # one, so the retry says what it is trying rather than what it has decided.
+  if (( elapsed < 30 )); then
+    echo "cairn: $signal took the window down ${elapsed}s in. Starting again without the" >&2
+    echo "       graphics card, in case that is the cause -- and from now on, so it does not" >&2
+    echo "       have to crash first every time. 'cairn --try-graphics' undoes that." >&2
+    run_software
+  fi
+
+  echo "cairn: $signal took the window down after ${elapsed}s." >&2
+  echo "       'cairn --crashes' shows what Cairn recorded about it." >&2
+  echo "       Your records are unharmed -- the vault is written as you go." >&2
+  echo "       The next start will skip the graphics card, in case that is the cause." >&2
+  echo "       'cairn --try-graphics' undoes that." >&2
+  exit "$status"
+fi
+
+exit "$status"

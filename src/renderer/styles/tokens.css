@@ -1,0 +1,322 @@
+/* Generated from defaults/theme/cairn.json. Edit that and run `make theme`. */
+
+:root {
+  --ink: #131b21;
+  --ink-2: #1b262d;
+  --ink-3: #26333b;
+  --ink-line: #212d34;
+  --ink-edge: #2f3d45;
+  --ink-text: #f2f4f1;
+  --ink-text-2: #dbe3e6;
+  --ink-body: #c3ced3;
+  --ink-nav: #b3bfc5;
+  --ink-muted: #8f9ea5;
+  --ink-faint: #68787f;
+  --ink-dim: #5d6d75;
+  --desk: #e6e8e3;
+  --paper: #fbfbf9;
+  --surface-2: #f3f4f0;
+  --surface-3: #eef0ec;
+  --hover: #dcdfd9;
+  --hover-soft: #f5f6f2;
+  --line: #d3d7d0;
+  --line-soft: #e4e7e1;
+  --line-hover: #b9bfb8;
+  --control-off: #c9cec8;
+  --text: #1e262c;
+  --muted: #6a767c;
+  --faint: #879398;
+  --on-accent: #ffffff;
+  --clay: #a8602a;
+  --clay-soft: #f4e8dc;
+  --clay-line: #e0cdbb;
+  --scrim: #0b1114;
+  --stage-token-considering: #8d979b;
+  --stage-considering: var(--stage-token-considering);
+  --stage-token-preparing: #a8602a;
+  --stage-preparing: var(--stage-token-preparing);
+  --stage-token-applied: #3a5c8c;
+  --stage-applied: var(--stage-token-applied);
+  --stage-token-interviewing: #2f6f5e;
+  --stage-interviewing: var(--stage-token-interviewing);
+  --stage-token-decision: #8a4f6d;
+  --stage-decision: var(--stage-token-decision);
+  --lane-boards: #3a5c8c;
+  --lane-feeds: #a8602a;
+
+  /* families */
+  --serif: Newsreader, Georgia, 'Times New Roman', serif;
+  --sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+
+  /* type. --fs is the text-size setting; a bare px size is a defect */
+  --fs: 1;
+  --size-view-title: calc(27px * var(--fs));
+  --size-figure: calc(24px * var(--fs));
+  --size-section-title: calc(22px * var(--fs));
+  --size-agenda-item: calc(21px * var(--fs));
+  --size-panel-heading: calc(17px * var(--fs));
+  --size-body: calc(13.5px * var(--fs));
+  --size-row-title: calc(13px * var(--fs));
+  --size-secondary: calc(12.5px * var(--fs));
+  --size-meta: calc(11.5px * var(--fs));
+  --font-view-title: 400 calc(27px * var(--fs))/1.15 var(--serif);
+  --font-figure: 400 calc(24px * var(--fs))/1 var(--serif);
+  --font-section-title: 400 calc(22px * var(--fs))/1.2 var(--serif);
+  --font-agenda-item: 400 calc(21px * var(--fs))/1.25 var(--serif);
+  --font-panel-heading: 400 calc(17px * var(--fs))/1.2 var(--serif);
+  --font-body: 400 calc(13.5px * var(--fs))/1.5 var(--sans);
+  --font-row-title: 500 calc(13px * var(--fs))/1.35 var(--sans);
+  --font-secondary: 400 calc(12.5px * var(--fs))/1.45 var(--sans);
+  --font-meta: 400 calc(11.5px * var(--fs))/1.4 var(--sans);
+
+  /* space */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* density. --d multiplies vertical padding on anything that makes a row */
+  --d: 1;
+
+  /* shape. There is no fourth radius */
+  --r: 6px;
+  --r-pill: 99px;
+  --r-round: 50%;
+
+  /* layout */
+  --rail-width: 246px;
+  --status-height: 30px;
+  --max-list: 840px;
+  --max-panels: 900px;
+  --max-wide: 960px;
+
+  /* motion */
+  --motion-panel: 180ms ease;
+  --motion-row: 180ms ease;
+  --motion-rail: 180ms ease;
+}
+
+:root[data-size="small"] { --fs: 0.92; }
+:root[data-size="large"] { --fs: 1.12; }
+:root[data-density="compact"] { --d: 0.72; }
+
+/* Accent themes. Seven values, and every one switches together --
+   three is not enough: hover, text on a fill and the border on it are all accent-derived. */
+:root[data-accent="pine"] {
+  --accent: #2f6f5e;
+  --accent-strong: #296152;
+  --accent-soft: #e0ebe6;
+  --accent-soft-line: #b6cfc7;
+  --accent-on-soft: #275b4d;
+  --accent-text: #2f6f5e;
+  --accent-ink: #a8cfc2;
+}
+:root[data-accent="slate"] {
+  --accent: #3a5c8c;
+  --accent-strong: #32507a;
+  --accent-soft: #e4e9f1;
+  --accent-soft-line: #bcc7da;
+  --accent-on-soft: #304b73;
+  --accent-text: #3a5c8c;
+  --accent-ink: #adc2dd;
+}
+:root[data-accent="mulberry"] {
+  --accent: #8a4f6d;
+  --accent-strong: #78455f;
+  --accent-soft: #f0e6ec;
+  --accent-soft-line: #d3bcc8;
+  --accent-on-soft: #714159;
+  --accent-text: #8a4f6d;
+  --accent-ink: #d5aec3;
+}
+:root[data-accent="olive"] {
+  --accent: #7a6a3f;
+  --accent-strong: #6a5c37;
+  --accent-soft: #eeebe0;
+  --accent-soft-line: #cec7b3;
+  --accent-on-soft: #645734;
+  --accent-text: #7a6a3f;
+  --accent-ink: #cbc19a;
+}
+
+/* Dark. prefers-color-scheme decides only when the user has not chosen,
+   so an explicit light choice always wins. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #0d1317;
+    --ink-2: #161f26;
+    --ink-3: #1f2b32;
+    --ink-line: #1b252b;
+    --ink-edge: #2b3a42;
+    --ink-text: #eef2f0;
+    --ink-text-2: #cdd7db;
+    --ink-body: #b3c0c5;
+    --ink-nav: #9aa8ae;
+    --ink-muted: #7d8b91;
+    --ink-faint: #66757b;
+    --ink-dim: #5b686e;
+    --desk: #11181c;
+    --paper: #1a2329;
+    --surface-2: #1f292f;
+    --surface-3: #232e34;
+    --hover: #253138;
+    --hover-soft: #1f2a30;
+    --line: #2c383e;
+    --line-soft: #232e34;
+    --line-hover: #3c4a51;
+    --control-off: #3a464c;
+    --text: #e3e8e6;
+    --muted: #9aa6ab;
+    --faint: #6f7c82;
+    --on-accent: #ffffff;
+    --clay: #c98552;
+    --clay-soft: #2d2018;
+    --clay-line: #4a3524;
+    --scrim: #000000;
+    --stage-token-considering: #9aa4a8;
+    --stage-considering: var(--stage-token-considering);
+    --stage-token-preparing: #c07b3f;
+    --stage-preparing: var(--stage-token-preparing);
+    --stage-token-applied: #5b82b8;
+    --stage-applied: var(--stage-token-applied);
+    --stage-token-interviewing: #4a9a83;
+    --stage-interviewing: var(--stage-token-interviewing);
+    --stage-token-decision: #b0708f;
+    --stage-decision: var(--stage-token-decision);
+    --lane-boards: #5b82b8;
+    --lane-feeds: #c07b3f;
+  }
+  :root:not([data-theme="light"])[data-accent="pine"] {
+    --accent: #2f6f5e;
+    --accent-strong: #4a8172;
+    --accent-soft: #152220;
+    --accent-soft-line: #1e453c;
+    --accent-on-soft: #97b7ae;
+    --accent-text: #86aba2;
+    --accent-ink: #a8cfc2;
+  }
+  :root:not([data-theme="light"])[data-accent="slate"] {
+    --accent: #3a5c8c;
+    --accent-strong: #526e98;
+    --accent-soft: #16212e;
+    --accent-soft-line: #25384f;
+    --accent-on-soft: #9caec6;
+    --accent-text: #8da0bc;
+    --accent-ink: #adc2dd;
+  }
+  :root:not([data-theme="light"])[data-accent="mulberry"] {
+    --accent: #8a4f6d;
+    --accent-strong: #9b6681;
+    --accent-soft: #251f28;
+    --accent-soft-line: #4d3245;
+    --accent-on-soft: #c4a7b6;
+    --accent-text: #bb99aa;
+    --accent-ink: #d5aec3;
+  }
+  :root:not([data-theme="light"])[data-accent="olive"] {
+    --accent: #7a6a3f;
+    --accent-strong: #8b7e59;
+    --accent-soft: #231f1f;
+    --accent-soft-line: #463f2b;
+    --accent-on-soft: #bcb49f;
+    --accent-text: #b2a990;
+    --accent-ink: #cbc19a;
+  }
+}
+
+:root[data-theme="dark"] {
+  --ink: #0d1317;
+  --ink-2: #161f26;
+  --ink-3: #1f2b32;
+  --ink-line: #1b252b;
+  --ink-edge: #2b3a42;
+  --ink-text: #eef2f0;
+  --ink-text-2: #cdd7db;
+  --ink-body: #b3c0c5;
+  --ink-nav: #9aa8ae;
+  --ink-muted: #7d8b91;
+  --ink-faint: #66757b;
+  --ink-dim: #5b686e;
+  --desk: #11181c;
+  --paper: #1a2329;
+  --surface-2: #1f292f;
+  --surface-3: #232e34;
+  --hover: #253138;
+  --hover-soft: #1f2a30;
+  --line: #2c383e;
+  --line-soft: #232e34;
+  --line-hover: #3c4a51;
+  --control-off: #3a464c;
+  --text: #e3e8e6;
+  --muted: #9aa6ab;
+  --faint: #6f7c82;
+  --on-accent: #ffffff;
+  --clay: #c98552;
+  --clay-soft: #2d2018;
+  --clay-line: #4a3524;
+  --scrim: #000000;
+  --stage-token-considering: #9aa4a8;
+  --stage-considering: var(--stage-token-considering);
+  --stage-token-preparing: #c07b3f;
+  --stage-preparing: var(--stage-token-preparing);
+  --stage-token-applied: #5b82b8;
+  --stage-applied: var(--stage-token-applied);
+  --stage-token-interviewing: #4a9a83;
+  --stage-interviewing: var(--stage-token-interviewing);
+  --stage-token-decision: #b0708f;
+  --stage-decision: var(--stage-token-decision);
+  --lane-boards: #5b82b8;
+  --lane-feeds: #c07b3f;
+}
+:root[data-theme="dark"][data-accent="pine"] {
+  --accent: #2f6f5e;
+  --accent-strong: #4a8172;
+  --accent-soft: #152220;
+  --accent-soft-line: #1e453c;
+  --accent-on-soft: #97b7ae;
+  --accent-text: #86aba2;
+  --accent-ink: #a8cfc2;
+}
+:root[data-theme="dark"][data-accent="slate"] {
+  --accent: #3a5c8c;
+  --accent-strong: #526e98;
+  --accent-soft: #16212e;
+  --accent-soft-line: #25384f;
+  --accent-on-soft: #9caec6;
+  --accent-text: #8da0bc;
+  --accent-ink: #adc2dd;
+}
+:root[data-theme="dark"][data-accent="mulberry"] {
+  --accent: #8a4f6d;
+  --accent-strong: #9b6681;
+  --accent-soft: #251f28;
+  --accent-soft-line: #4d3245;
+  --accent-on-soft: #c4a7b6;
+  --accent-text: #bb99aa;
+  --accent-ink: #d5aec3;
+}
+:root[data-theme="dark"][data-accent="olive"] {
+  --accent: #7a6a3f;
+  --accent-strong: #8b7e59;
+  --accent-soft: #231f1f;
+  --accent-soft-line: #463f2b;
+  --accent-on-soft: #bcb49f;
+  --accent-text: #b2a990;
+  --accent-ink: #cbc19a;
+}
+
+/* A swatch shows the colour it selects, so it is the one place a theme's own value
+   is drawn rather than read. Generated here so component CSS stays free of literals. */
+.swatches button[data-accent="pine"] { background: #2f6f5e; }
+.swatches button[data-accent="slate"] { background: #3a5c8c; }
+.swatches button[data-accent="mulberry"] { background: #8a4f6d; }
+.swatches button[data-accent="olive"] { background: #7a6a3f; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}

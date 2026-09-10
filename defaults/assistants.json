@@ -1,0 +1,72 @@
+{
+  "note": "Providers Cairn knows how to speak to. Nothing here is switched on, nothing here holds a key, and adding one is a row you fill in yourself. Two protocols cover the market: Anthropic's own, and the chat-completions shape everybody else offers.",
+  "why-no-prices": "Cairn ships no price table. What a model costs changes without notice, and a figure that is quietly a year old is worse than no figure at all -- so Cairn shows you the size of what you are about to send and links to the provider's own pricing page.",
+  "providers": [
+    {
+      "id": "anthropic",
+      "label": "Anthropic",
+      "kind": "anthropic",
+      "base": "https://api.anthropic.com",
+      "model": "claude-opus-5",
+      "grounded": true,
+      "docs": "https://docs.anthropic.com/en/api/getting-started",
+      "pricing": "https://www.anthropic.com/pricing",
+      "keys": "https://console.anthropic.com/settings/keys"
+    },
+    {
+      "id": "openai",
+      "label": "OpenAI",
+      "kind": "openai-compatible",
+      "base": "https://api.openai.com",
+      "model": "",
+      "grounded": false,
+      "docs": "https://platform.openai.com/docs/api-reference/chat",
+      "pricing": "https://openai.com/api/pricing/",
+      "keys": "https://platform.openai.com/api-keys"
+    },
+    {
+      "id": "gemini",
+      "label": "Google Gemini",
+      "kind": "openai-compatible",
+      "base": "https://generativelanguage.googleapis.com/v1beta/openai",
+      "model": "",
+      "grounded": false,
+      "docs": "https://ai.google.dev/gemini-api/docs/openai",
+      "pricing": "https://ai.google.dev/pricing",
+      "keys": "https://aistudio.google.com/apikey"
+    },
+    {
+      "id": "mistral",
+      "label": "Mistral",
+      "kind": "openai-compatible",
+      "base": "https://api.mistral.ai",
+      "model": "",
+      "grounded": false,
+      "docs": "https://docs.mistral.ai/api/",
+      "pricing": "https://mistral.ai/pricing",
+      "keys": "https://console.mistral.ai/api-keys"
+    },
+    {
+      "id": "ollama",
+      "label": "Ollama, on this machine",
+      "kind": "openai-compatible",
+      "base": "http://localhost:11434",
+      "model": "",
+      "grounded": false,
+      "docs": "https://docs.ollama.com/openai",
+      "pricing": "",
+      "keys": ""
+    },
+    {
+      "id": "custom",
+      "label": "Something else",
+      "kind": "openai-compatible",
+      "base": "",
+      "model": "",
+      "grounded": false,
+      "docs": "",
+      "pricing": "",
+      "keys": ""
+    }
+  ]
+}

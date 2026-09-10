@@ -1,0 +1,118 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Linters, formatters and the shell checks run once. Nothing about them is
+  # platform-specific and running them three times says the same thing three times.
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: crates/cairn-keyring
+
+      - name: Install dependencies
+        run: npm ci
+
+      # The Rust key module is built against the host and a runner has no cargo
+      # registry, so this is setup rather than part of the gate.
+      - name: Build the key module
+        run: npm run native
+
+      # npm installs the helper as itself, and the launcher refuses to start without a
+      # root-owned one -- so without this, every test that runs the launcher stops at
+      # that refusal and asserts against a message about sandboxes.
+      - name: Set the Chromium sandbox up, as a person would
+        run: |
+          helper=node_modules/electron/dist/chrome-sandbox
+          if [ ! -f "$helper" ]; then
+            echo "no $helper here — the launcher tests will say they were skipped and why"
+            ls -la node_modules/electron/dist | head -20
+            exit 0
+          fi
+          sudo chown root:root "$helper"
+          sudo chmod 4755 "$helper"
+          ./bin/cairn --check-sandbox
+
+      # One command, and it is the one you run here. Listing the steps again would
+      # be a second copy of the gate, and two copies drift until a runner finds out.
+      - name: Everything a commit has to pass
+        run: make check
+
+  # The parts that decide whether Cairn runs at all are compiled: the Rust key module
+  # and the database binding are built against the host, so a green Linux build says
+  # nothing about whether a Mac can open a vault.
+  #
+  # It does not run on a push or a pull request. A macOS minute is billed at ten and a
+  # Windows minute at two, so this matrix on every dependabot pull request is what spent
+  # a month of them. The release builds and tests all three on the tag, so a break on
+  # either fails the release rather than reaching anybody. Run this by hand before tagging
+  # when a change touches the native side.
+  build:
+    if: github.event_name == 'workflow_dispatch'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: crates/cairn-keyring
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the key module and the app
+        run: |
+          npm run native
+          npm run build
+
+      # Linux only: the other two sandbox a renderer without a setuid helper.
+      - name: Set the Chromium sandbox up, as a person would
+        if: runner.os == 'Linux'
+        run: |
+          helper=node_modules/electron/dist/chrome-sandbox
+          if [ ! -f "$helper" ]; then
+            echo "no $helper here — the launcher tests will say they were skipped and why"
+            ls -la node_modules/electron/dist | head -20
+            exit 0
+          fi
+          sudo chown root:root "$helper"
+          sudo chmod 4755 "$helper"
+
+      - name: Tests
+        run: npm test

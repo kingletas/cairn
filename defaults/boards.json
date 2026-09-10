@@ -1,0 +1,18 @@
+{
+  "note": "Nothing here is added until somebody presses a button. Which companies you watch is the most telling thing in this app, so Cairn arrives watching none of them -- what it carries is a list of boards it knows are real, offered on the Employers screen so a first run has somewhere to fetch from. Adding one records it in your vault; removing it takes it out. The list is identical for everybody, so it says nothing about you until you change it.",
+  "howToAdd": "Open a company's careers page, copy the URL of any job on it, and paste it into Sources -> Employers. A URL like https://boards.greenhouse.io/EXAMPLE/jobs/1234 gives the token EXAMPLE.",
+  "examples": [],
+  "suggested": [
+    { "sourceId": "greenhouse", "token": "gitlab", "company": "GitLab" },
+    { "sourceId": "greenhouse", "token": "elastic", "company": "Elastic" },
+    { "sourceId": "greenhouse", "token": "figma", "company": "Figma" },
+    { "sourceId": "greenhouse", "token": "mozilla", "company": "Mozilla" },
+    { "sourceId": "lever", "token": "palantir", "company": "Palantir" },
+    { "sourceId": "lever", "token": "netflix", "company": "Netflix" },
+    { "sourceId": "ashby", "token": "openai", "company": "OpenAI" },
+    { "sourceId": "ashby", "token": "notion", "company": "Notion" },
+    { "sourceId": "ashby", "token": "Ramp", "company": "Ramp" },
+    { "sourceId": "smartrecruiters", "token": "BoschGroup", "company": "Bosch" },
+    { "sourceId": "smartrecruiters", "token": "Ubisoft2", "company": "Ubisoft" }
+  ]
+}

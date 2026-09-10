@@ -1,0 +1,65 @@
+{
+  "note": "The questions application forms ask over and over, grouped by what they are actually asking. `terms` is the list of wordings Cairn recognises for each, and it is data rather than code -- a wording that gets missed is a line added here, not a change to the matcher. Cairn ships the questions and never an answer, because an answer describes a person and one nobody wrote is worse than a blank field.",
+  "intents": [
+    { "id": "work-authorisation", "prompt": "Are you legally allowed to work where this role is based?", "kind": "choice",
+      "terms": ["legally authorized to work", "legally authorised to work", "legally eligible to work", "right to work",
+                "work authorization", "work authorisation", "authorized to work", "authorised to work",
+                "eligible to work", "permitted to work", "work permit", "work eligibility"] },
+
+    { "id": "sponsorship", "prompt": "Will you need visa sponsorship, now or later?", "kind": "choice",
+      "terms": ["require sponsorship", "need sponsorship", "visa sponsorship", "sponsorship for employment",
+                "immigration sponsorship", "require visa", "need a visa", "sponsorship now or in the future"] },
+
+    { "id": "notice-period", "prompt": "What is your notice period, and when could you start?", "kind": "short",
+      "terms": ["notice period", "when can you start", "when could you start", "when are you available to start",
+                "available to start", "earliest start", "start date", "availability to start", "your availability",
+                "how soon can you start", "notice you need to give", "when would you be able to start"] },
+
+    { "id": "salary-expectation", "prompt": "What are you looking for in pay?", "kind": "short",
+      "terms": ["salary expectation", "compensation expectation", "expected compensation", "desired salary",
+                "expected salary", "salary requirement", "compensation requirement", "pay expectation",
+                "desired compensation", "salary range you", "what salary", "target salary", "base salary you are seeking"] },
+
+    { "id": "location", "prompt": "Where are you based, and are you willing to relocate?", "kind": "short",
+      "terms": ["where are you located", "where are you currently located", "where are you based",
+                "current location", "your location", "city and country", "country of residence",
+                "willing to relocate", "open to relocation", "would you relocate", "based in"] },
+
+    { "id": "why-this-company", "prompt": "Why do you want to work here?", "kind": "long",
+      "terms": ["why do you want to work", "why are you interested", "why this company", "why do you want to join",
+                "what draws you to", "what interests you about", "why us"] },
+
+    { "id": "why-leaving", "prompt": "Why are you leaving your current role?", "kind": "long",
+      "terms": ["why are you leaving", "reason for leaving", "why looking for a new", "why are you looking to leave"] },
+
+    { "id": "how-heard", "prompt": "How did you hear about this role?", "kind": "short",
+      "terms": ["how did you hear", "where did you find", "how did you find out about", "how did you come across",
+                "referred by", "referral source"] },
+
+    { "id": "experience-summary", "prompt": "Walk us through something you built end to end.", "kind": "long",
+      "terms": ["walk us through", "tell us about a project", "describe a system you", "something you built",
+                "describe a project", "proudest work", "relevant experience"] },
+
+    { "id": "hardest-problem", "prompt": "Tell us about a technical decision you got wrong.", "kind": "long",
+      "terms": ["decision you got wrong", "mistake you made", "something that went wrong", "hardest problem",
+                "most difficult", "a time you failed", "learned from a failure"] },
+
+    { "id": "on-call", "prompt": "How do you handle being on call?", "kind": "long",
+      "terms": ["on call", "on-call", "incident response", "out of hours", "pager", "production support"] },
+
+    { "id": "what-next", "prompt": "What are you looking for in your next role?", "kind": "long",
+      "terms": ["looking for in your next", "what are you looking for", "ideal next role", "next opportunity",
+                "what matters to you in", "what would make this a good move"] },
+
+    { "id": "portfolio", "prompt": "Where can they see your work?", "kind": "short",
+      "terms": ["github", "gitlab", "portfolio", "personal website", "linkedin", "link to your work",
+                "your website", "public work"] },
+
+    { "id": "pronouns", "prompt": "What pronouns would you like used?", "kind": "short",
+      "terms": ["pronouns", "preferred pronouns"] },
+
+    { "id": "accommodations", "prompt": "Do you need any adjustments to take part in the process?", "kind": "long",
+      "terms": ["reasonable accommodation", "reasonable adjustment", "accessibility needs",
+                "adjustments to the interview", "any accommodations", "support during the process"] }
+  ]
+}

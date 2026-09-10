@@ -1,0 +1,85 @@
+{
+  "note": "The listing sites Cairn ships knowing how to read. This is a source pack: a file saying where to fetch and what the fields in the answer are called, which is all a listing site is. Copy it, edit it, and import your own from the Sources screen to read a feed Cairn has never heard of -- a private one, a paid one, or one that did not exist when this was written. Employer job boards are not in here: Greenhouse, Lever, Ashby and SmartRecruiters each need something a field map cannot express, so they are built in.",
+  "format": {
+    "endpoint": "https or nothing. `{query}` is replaced by one of your search titles, url-encoded. A feed with no search parameter says \"searchless\": true instead, and is fetched once a run rather than once per title.",
+    "list": "Where the jobs sit in the answer. Leave it out when the answer is itself a list. A dotted path such as `data.results` works.",
+    "fields": "What each field is called in that feed. `company` and `role` are required; the rest are taken when they are there. A dotted path such as `location.name` works. `extraText` appends other fields to the description under a label, for a feed that keeps the salary in a free-text field of its own.",
+    "pay": "`payMin` and `payMax` are read only when `payDisclosure` names a field saying the employer published the figure -- a boolean flag or a word, with anything missing or unknown counting as no. A feed that maps no `payDisclosure` has its pay fields ignored, because pay is a hard screen and a listing site's own estimate would drop a real role or admit one nobody asked for. A figure a feed keeps as free text goes through `extraText` instead, where it is read as prose and labelled as a claim.",
+    "notInHere": "There is nowhere to put a key, a token or a password, on purpose -- this file is meant to be shareable. And a pack cannot switch a feed on: importing one never causes a request, and nothing is fetched until you turn it on yourself."
+  },
+  "sources": [
+    {
+      "id": "remotive",
+      "label": "Remotive",
+      "kind": "aggregator",
+      "docs": "https://remotive.com/api-documentation",
+      "note": "Remote roles only, and small. Worth running to meet employers you have not heard of. Its salary field is whatever the poster typed, so it is appended to the description and read as prose rather than taken as a band.",
+      "endpoint": "https://remotive.com/api/remote-jobs?search={query}&limit=50",
+      "list": "jobs",
+      "fields": {
+        "company": "company_name",
+        "role": "title",
+        "url": "url",
+        "description": "description",
+        "location": "candidate_required_location",
+        "postedAt": "publication_date",
+        "extraText": {
+          "Salary": "salary"
+        }
+      }
+    },
+    {
+      "id": "arbeitnow",
+      "label": "Arbeitnow",
+      "kind": "aggregator",
+      "docs": "https://www.arbeitnow.com/api",
+      "note": "Remote-heavy and weighted towards Europe. It has no search parameter, so it hands back one list of everything and the titles are matched here afterwards. It carries no pay figures at all.",
+      "endpoint": "https://www.arbeitnow.com/api/job-board-api",
+      "searchless": true,
+      "list": "data",
+      "fields": {
+        "company": "company_name",
+        "role": "title",
+        "url": "url",
+        "description": "description",
+        "location": "location",
+        "remoteFlag": "remote",
+        "postedAt": "created_at"
+      }
+    },
+    {
+      "id": "jobicy",
+      "label": "Jobicy",
+      "kind": "aggregator",
+      "docs": "https://jobicy.com/jobs-rss-feed",
+      "note": "Remote only, and searched by tag rather than by free text, so a three-word job title finds less here than elsewhere. It overlaps Remotive heavily. Its salary numbers are its own rather than the employer's, and it never says which is which, so Cairn does not read them.",
+      "endpoint": "https://jobicy.com/api/v2/remote-jobs?count=50&tag={query}",
+      "list": "jobs",
+      "fields": {
+        "company": "companyName",
+        "role": "jobTitle",
+        "url": "url",
+        "description": "jobDescription",
+        "location": "jobGeo",
+        "postedAt": "pubDate"
+      }
+    },
+    {
+      "id": "remoteok",
+      "label": "Remote OK",
+      "kind": "aggregator",
+      "docs": "https://remoteok.com/api",
+      "note": "One list of everything it has, with no search parameter. Weighted towards startup and web work, and its first row is a licence notice rather than a job, which Cairn skips. Its salary numbers are its own and unattributed, so Cairn does not read them.",
+      "endpoint": "https://remoteok.com/api",
+      "searchless": true,
+      "fields": {
+        "company": "company",
+        "role": "position",
+        "url": "url",
+        "description": "description",
+        "location": "location",
+        "postedAt": "date"
+      }
+    }
+  ]
+}

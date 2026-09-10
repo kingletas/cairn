@@ -1,0 +1,13 @@
+/* The page an employer receives. Deliberately plain: a cover letter that looks
+   designed reads as a template, and the only job here is to be easy to read. */
+
+@page { margin: 0; }
+
+body {
+  margin: 0;
+  font: 10.5pt/1.45 Georgia, "Times New Roman", serif;
+  color: #111;
+}
+
+p { margin: 0 0 0.85em; }
+p:last-child { margin-bottom: 0; }

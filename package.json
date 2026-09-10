@@ -1,0 +1,52 @@
+{
+  "name": "cairn",
+  "version": "1.2.0",
+  "description": "A local-first job application tracker. Your data stays on your machine, encrypted, and the app tells you what it sent and to whom.",
+  "homepage": "https://github.com/kingletas/cairn",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kingletas/cairn.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kingletas/cairn/issues"
+  },
+  "author": {
+    "name": "Luis Tineo",
+    "email": "kingletas@users.noreply.github.com"
+  },
+  "desktopName": "com.kingletas.Cairn.desktop",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "main": "dist/main/index.js",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "theme": "node scripts/build-theme.mjs",
+    "theme:check": "node scripts/build-theme.mjs --check",
+    "phrases": "node scripts/extract-phrases.mjs defaults/lang/phrases.json",
+    "native": "bash scripts/build-keyring.sh",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "test": "bash -c 'ELECTRON_RUN_AS_NODE=1 electron --test \"tests/unit/*.test.js\"'",
+    "build": "bash scripts/rebuild-binding.sh && npm run theme && tsc && node scripts/copy-assets.mjs",
+    "start": "npm run build && electron .",
+    "check": "npm run theme:check && npm run typecheck && npm run lint && npm run test",
+    "rebuild": "electron-rebuild -f -w better-sqlite3-multiple-ciphers"
+  },
+  "dependencies": {
+    "better-sqlite3-multiple-ciphers": "^13.0.3"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^4.2.0",
+    "@napi-rs/cli": "^2.18.4",
+    "@types/node": "^24.9.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "electron": "^44.2.0",
+    "electron-builder": "^26.15.3",
+    "eslint": "^8.57.0",
+    "typescript": "^5.5.0"
+  }
+}

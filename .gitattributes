@@ -1,0 +1,8 @@
+# Cairn reads line endings directly: the template parser, the letter guard and the
+# launcher are all LF, and a CRLF checkout failed four tests on Windows and nowhere
+# else. The working tree is LF on every platform.
+* text=auto eol=lf
+
+*.pdf binary
+*.png binary
+*.node binary

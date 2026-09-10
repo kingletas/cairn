@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Cairn</title>
+  <!-- A stack of stones: what you build on a long walk so the next person, usually
+       yourself three weeks later, can tell where the path went. -->
+  <rect width="128" height="128" rx="26" fill="#131b21"/>
+  <g fill="#a8cfc2">
+    <ellipse cx="64" cy="96" rx="30" ry="10"/>
+    <ellipse cx="62" cy="78" rx="24" ry="9"/>
+    <ellipse cx="66" cy="62" rx="18" ry="8"/>
+    <ellipse cx="62" cy="48" rx="13" ry="6.5"/>
+  </g>
+  <ellipse cx="65" cy="36" rx="8" ry="5" fill="#2f6f5e"/>
+</svg>

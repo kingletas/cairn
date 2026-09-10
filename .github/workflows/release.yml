@@ -1,0 +1,125 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  # One job per operating system, because the parts that decide whether Cairn runs are
+  # compiled: the Rust key module and the database binding are built against the host,
+  # and nothing cross-builds them. A Windows installer made on Linux would open to a
+  # vault it cannot read.
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            platform: linux
+            artifact: linux
+          - os: macos-latest
+            platform: mac
+            artifact: mac-arm64
+          - os: windows-latest
+            platform: win
+            artifact: win
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: crates/cairn-keyring
+
+      # fpm needs rpmbuild to write an .rpm, and the runner does not ship it.
+      - name: Tools the Linux packages need
+        if: matrix.platform == 'linux'
+        run: sudo apt-get update && sudo apt-get install -y rpm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the key module and the app
+        run: |
+          npm run native
+          npm run build
+
+      # A release that cannot pass its own checks should not be published, and the
+      # suite is where a binding built for the wrong runtime shows up.
+      - name: Tests
+        run: npm test
+
+      - name: Package
+        run: npx electron-builder --${{ matrix.platform }} --publish never
+
+      # Only what somebody installs. The unpacked directories are build scratch and
+      # would be several hundred megabytes of it per platform.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cairn-${{ matrix.artifact }}
+          path: |
+            release/*.AppImage
+            release/*.deb
+            release/*.rpm
+            release/*.tar.gz
+            release/*.dmg
+            release/*.zip
+            release/*.exe
+            release/*.blockmap
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: release
+          merge-multiple: true
+
+      # The changelog section for this tag, then the one thing a release page has to
+      # say that a changelog does not: which file to take, and that none is signed.
+      - name: Release notes
+        id: notes
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          {
+            echo 'body<<CAIRN_EOF'
+            packaging/release-notes.sh "$version"
+            echo
+            echo '## Which file'
+            echo
+            echo '| You are on | Take |'
+            echo '|---|---|'
+            echo '| Linux, anything | the `.AppImage` — make it executable and run it |'
+            echo '| Debian, Ubuntu, Mint | the `.deb` |'
+            echo '| Fedora, RHEL, openSUSE | the `.rpm` |'
+            echo '| macOS, Apple silicon | the `arm64.dmg` |'
+            echo '| Windows | `Setup.exe`, or the portable `.exe` to run without installing |'
+            echo
+            echo '**None of these is signed.** macOS will call the app damaged or from an'
+            echo 'unidentified developer, and Windows SmartScreen will warn before it runs.'
+            echo 'That is what an unsigned build looks like rather than a sign of trouble;'
+            echo '`docs/installing.md` says how to get past each, and building from source'
+            echo 'avoids the question.'
+            echo 'CAIRN_EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          body: ${{ steps.notes.outputs.body }}
+          files: release/*
+          fail_on_unmatched_files: true

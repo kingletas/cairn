@@ -1,0 +1,25 @@
+node_modules/
+dist/
+release/
+native/
+target/
+*.node
+*.tsbuildinfo
+.DS_Store
+
+# A crash dump of Cairn's own process holds whatever was in memory when it died --
+# the vault key and anything decrypted with it included. It is the worst file this
+# repository could carry, and it is easy to produce by accident.
+/core
+core.*
+*.core
+vgcore.*
+native.build.*/
+
+# Scratch belonging to whoever is working here -- notes, screenshots, a probe script.
+# The repository has to carry this line itself: the exclude file that ignores it on one
+# machine travels with nothing, so a clone would commit somebody's working directory.
+/local.d/
+
+# The user-level ignore file excludes *.sh, which would keep every script here out of the repository.
+!*.sh

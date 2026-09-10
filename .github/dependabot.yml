@@ -1,0 +1,25 @@
+version: 2
+updates:
+  # Grouped, and few. One pull request per package meant twelve of them open at once,
+  # each running its own CI.
+  - package-ecosystem: npm
+    directory: /
+    schedule: { interval: weekly }
+    open-pull-requests-limit: 2
+    groups:
+      npm: { patterns: ['*'] }
+
+  - package-ecosystem: cargo
+    directory: /crates/cairn-keyring
+    schedule: { interval: weekly }
+    open-pull-requests-limit: 1
+    groups:
+      cargo: { patterns: ['*'] }
+
+  # A pinned action is only safe while somebody is watching it age.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: weekly }
+    open-pull-requests-limit: 1
+    groups:
+      actions: { patterns: ['*'] }

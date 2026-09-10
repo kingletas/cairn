@@ -1,0 +1,347 @@
+{
+  "note": "A sample so the chips on the setup screen are not empty on your first run. These are common titles across a broad range of work, not a recommendation, and they are meant to be replaced rather than lived with. Your own list goes in families.json in your vault folder, where it is yours and is never in this repository -- same shape as this file, and \"replaceShipped\": true there drops this sample entirely. A family with the same id as one here replaces it outright.",
+  "howItIsUsed": "Picking a family does two things: its titles become the terms the listing sites are searched for, and every title in it is what a posting's own title is compared against. A run searches a handful of terms, taken one family at a time from the top of each list, so put the broadest title of a family first -- \"Platform Engineer\" finds the senior and staff versions of itself, and \"Staff Platform Engineer\" does not.",
+  "families": [
+    {
+      "id": "platform",
+      "label": "Platform engineering",
+      "titles": [
+        "Platform Engineer",
+        "Infrastructure Engineer",
+        "Senior Platform Engineer",
+        "Staff Platform Engineer",
+        "Principal Platform Engineer",
+        "Senior Infrastructure Engineer",
+        "Staff Infrastructure Engineer",
+        "Platform Reliability Engineer",
+        "Infrastructure Automation Engineer"
+      ]
+    },
+    {
+      "id": "sre",
+      "label": "Site reliability",
+      "titles": [
+        "Site Reliability Engineer",
+        "Production Engineer",
+        "Senior Site Reliability Engineer",
+        "Staff Site Reliability Engineer",
+        "Principal Site Reliability Engineer"
+      ]
+    },
+    {
+      "id": "devops",
+      "label": "DevOps and cloud",
+      "titles": [
+        "DevOps Engineer",
+        "Cloud Engineer",
+        "Senior DevOps Engineer",
+        "Cloud Infrastructure Engineer",
+        "Senior Cloud Infrastructure Engineer",
+        "Build and Release Engineer"
+      ]
+    },
+    {
+      "id": "commerce",
+      "label": "Ecommerce engineering",
+      "titles": [
+        "Ecommerce Engineer",
+        "Shopify Developer",
+        "Magento Developer",
+        "Adobe Commerce Engineer",
+        "Ecommerce Solutions Architect",
+        "Commerce Platform Engineer"
+      ]
+    },
+    {
+      "id": "software",
+      "label": "Software engineering",
+      "titles": [
+        "Software Engineer",
+        "Backend Engineer",
+        "Frontend Engineer",
+        "Full Stack Engineer",
+        "Senior Software Engineer",
+        "Staff Software Engineer"
+      ]
+    },
+    {
+      "id": "data",
+      "label": "Data",
+      "titles": [
+        "Data Engineer",
+        "Analytics Engineer",
+        "Data Scientist",
+        "Data Analyst",
+        "Data Platform Engineer"
+      ]
+    },
+    {
+      "id": "ml",
+      "label": "Machine learning and AI",
+      "titles": [
+        "Machine Learning Engineer",
+        "AI Engineer",
+        "MLOps Engineer",
+        "Applied Scientist",
+        "Research Engineer"
+      ]
+    },
+    {
+      "id": "security",
+      "label": "Security",
+      "titles": [
+        "Security Engineer",
+        "Application Security Engineer",
+        "Detection Engineer",
+        "Security Analyst",
+        "Penetration Tester",
+        "Cloud Security Engineer"
+      ]
+    },
+    {
+      "id": "embedded",
+      "label": "Embedded and firmware",
+      "titles": [
+        "Embedded Software Engineer",
+        "Firmware Engineer",
+        "Embedded Systems Engineer"
+      ]
+    },
+    {
+      "id": "mobile",
+      "label": "Mobile",
+      "titles": [
+        "Mobile Engineer",
+        "iOS Engineer",
+        "Android Engineer"
+      ]
+    },
+    {
+      "id": "qa",
+      "label": "Quality",
+      "titles": [
+        "QA Engineer",
+        "Test Engineer",
+        "Software Engineer in Test",
+        "Automation Engineer"
+      ]
+    },
+    {
+      "id": "it",
+      "label": "IT and systems administration",
+      "titles": [
+        "Systems Administrator",
+        "Network Engineer",
+        "IT Support Specialist",
+        "Systems Engineer"
+      ]
+    },
+    {
+      "id": "design",
+      "label": "Design",
+      "titles": [
+        "Product Designer",
+        "UX Designer",
+        "UX Researcher",
+        "Design Systems Designer",
+        "Brand Designer"
+      ]
+    },
+    {
+      "id": "product",
+      "label": "Product",
+      "titles": [
+        "Product Manager",
+        "Senior Product Manager",
+        "Technical Program Manager"
+      ]
+    },
+    {
+      "id": "engineering-leadership",
+      "label": "Engineering leadership",
+      "titles": [
+        "Engineering Manager",
+        "Director of Engineering",
+        "Director of Platform Engineering",
+        "Director of Infrastructure",
+        "Head of Platform Engineering",
+        "VP of Engineering"
+      ]
+    },
+    {
+      "id": "writing",
+      "label": "Writing and documentation",
+      "titles": [
+        "Technical Writer",
+        "Documentation Engineer",
+        "Content Designer"
+      ]
+    },
+    {
+      "id": "support",
+      "label": "Support and success",
+      "titles": [
+        "Support Engineer",
+        "Solutions Engineer",
+        "Customer Success Manager"
+      ]
+    },
+    {
+      "id": "operations",
+      "label": "Operations",
+      "titles": [
+        "Operations Manager",
+        "Business Operations Analyst",
+        "Programme Manager"
+      ]
+    },
+    {
+      "id": "marketing",
+      "label": "Marketing",
+      "titles": [
+        "Product Marketing Manager",
+        "Content Marketer",
+        "Growth Marketer"
+      ]
+    },
+    {
+      "id": "sales",
+      "label": "Sales",
+      "titles": [
+        "Account Executive",
+        "Sales Engineer",
+        "Partnerships Manager"
+      ]
+    },
+    {
+      "id": "finance",
+      "label": "Finance",
+      "titles": [
+        "Financial Analyst",
+        "Accountant",
+        "Controller"
+      ]
+    },
+    {
+      "id": "people",
+      "label": "People",
+      "titles": [
+        "Recruiter",
+        "Technical Recruiter",
+        "People Operations Manager"
+      ]
+    },
+    {
+      "id": "project-management",
+      "label": "Project and programme management",
+      "titles": [
+        "Project Manager",
+        "Program Manager",
+        "Delivery Manager",
+        "Scrum Master",
+        "Business Analyst"
+      ]
+    },
+    {
+      "id": "healthcare",
+      "label": "Healthcare",
+      "titles": [
+        "Registered Nurse",
+        "Medical Assistant",
+        "Nurse Practitioner",
+        "Physical Therapist",
+        "Care Coordinator"
+      ]
+    },
+    {
+      "id": "education",
+      "label": "Education and training",
+      "titles": [
+        "Teacher",
+        "Instructional Designer",
+        "Curriculum Developer",
+        "Training Manager",
+        "Academic Advisor"
+      ]
+    },
+    {
+      "id": "science",
+      "label": "Science and research",
+      "titles": [
+        "Research Scientist",
+        "Laboratory Technician",
+        "Clinical Research Associate",
+        "Research Associate"
+      ]
+    },
+    {
+      "id": "legal",
+      "label": "Legal and compliance",
+      "titles": [
+        "Paralegal",
+        "Contracts Manager",
+        "Compliance Officer",
+        "Corporate Counsel"
+      ]
+    },
+    {
+      "id": "logistics",
+      "label": "Supply chain and logistics",
+      "titles": [
+        "Logistics Coordinator",
+        "Supply Chain Analyst",
+        "Warehouse Manager",
+        "Procurement Specialist"
+      ]
+    },
+    {
+      "id": "trades",
+      "label": "Skilled trades and field work",
+      "titles": [
+        "Field Service Technician",
+        "Maintenance Technician",
+        "Electrician",
+        "HVAC Technician"
+      ]
+    },
+    {
+      "id": "customer-service",
+      "label": "Customer service",
+      "titles": [
+        "Customer Support Specialist",
+        "Client Services Manager",
+        "Call Centre Representative"
+      ]
+    },
+    {
+      "id": "media",
+      "label": "Media and production",
+      "titles": [
+        "Video Editor",
+        "Producer",
+        "Photographer",
+        "Motion Designer",
+        "Copywriter"
+      ]
+    },
+    {
+      "id": "admin",
+      "label": "Administration",
+      "titles": [
+        "Executive Assistant",
+        "Office Manager",
+        "Administrative Coordinator"
+      ]
+    },
+    {
+      "id": "nonprofit",
+      "label": "Non-profit",
+      "titles": [
+        "Programme Coordinator",
+        "Grant Writer",
+        "Development Manager",
+        "Volunteer Coordinator"
+      ]
+    }
+  ]
+}

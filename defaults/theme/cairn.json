@@ -1,0 +1,279 @@
+{
+  "$schema": "./tokens.schema.json",
+  "meta": {
+    "name": "Cairn",
+    "note": "Cairn's theme, and the whole of it. Change a value here and run `make theme` to rebuild src/renderer/styles/tokens.css, which is generated and never edited by hand. Component CSS carries no colour literal, no bare pixel type size and no fourth radius, so every colour in the app comes from this file and a change here reaches all of it."
+  },
+  "light": {
+    "ink": "#131b21",
+    "ink-2": "#1b262d",
+    "ink-3": "#26333b",
+    "ink-line": "#212d34",
+    "ink-edge": "#2f3d45",
+    "ink-text": "#f2f4f1",
+    "ink-text-2": "#dbe3e6",
+    "ink-body": "#c3ced3",
+    "ink-nav": "#b3bfc5",
+    "ink-muted": "#8f9ea5",
+    "ink-faint": "#68787f",
+    "ink-dim": "#5d6d75",
+    "desk": "#e6e8e3",
+    "paper": "#fbfbf9",
+    "surface-2": "#f3f4f0",
+    "surface-3": "#eef0ec",
+    "hover": "#dcdfd9",
+    "hover-soft": "#f5f6f2",
+    "line": "#d3d7d0",
+    "line-soft": "#e4e7e1",
+    "line-hover": "#b9bfb8",
+    "control-off": "#c9cec8",
+    "text": "#1e262c",
+    "muted": "#6a767c",
+    "faint": "#879398",
+    "on-accent": "#ffffff",
+    "clay": "#a8602a",
+    "clay-soft": "#f4e8dc",
+    "clay-line": "#e0cdbb",
+    "scrim": "#0b1114"
+  },
+  "dark": {
+    "ink": "#0d1317",
+    "ink-2": "#161f26",
+    "ink-3": "#1f2b32",
+    "ink-line": "#1b252b",
+    "ink-edge": "#2b3a42",
+    "ink-text": "#eef2f0",
+    "ink-text-2": "#cdd7db",
+    "ink-body": "#b3c0c5",
+    "ink-nav": "#9aa8ae",
+    "ink-muted": "#7d8b91",
+    "ink-faint": "#66757b",
+    "ink-dim": "#5b686e",
+    "desk": "#11181c",
+    "paper": "#1a2329",
+    "surface-2": "#1f292f",
+    "surface-3": "#232e34",
+    "hover": "#253138",
+    "hover-soft": "#1f2a30",
+    "line": "#2c383e",
+    "line-soft": "#232e34",
+    "line-hover": "#3c4a51",
+    "control-off": "#3a464c",
+    "text": "#e3e8e6",
+    "muted": "#9aa6ab",
+    "faint": "#6f7c82",
+    "on-accent": "#ffffff",
+    "clay": "#c98552",
+    "clay-soft": "#2d2018",
+    "clay-line": "#4a3524",
+    "scrim": "#000000"
+  },
+  "stage": {
+    "light": {
+      "considering": "#8d979b",
+      "preparing": "#a8602a",
+      "applied": "#3a5c8c",
+      "interviewing": "#2f6f5e",
+      "decision": "#8a4f6d"
+    },
+    "dark": {
+      "considering": "#9aa4a8",
+      "preparing": "#c07b3f",
+      "applied": "#5b82b8",
+      "interviewing": "#4a9a83",
+      "decision": "#b0708f"
+    }
+  },
+  "lane": {
+    "note": "The two kinds of source, which are read side by side and are told apart by colour rather than by reading the label.",
+    "light": {
+      "boards": "#3a5c8c",
+      "feeds": "#a8602a"
+    },
+    "dark": {
+      "boards": "#5b82b8",
+      "feeds": "#c07b3f"
+    }
+  },
+  "accent": {
+    "light": {
+      "pine": {
+        "accent": "#2f6f5e",
+        "strong": "#296152",
+        "soft": "#e0ebe6",
+        "soft-line": "#b6cfc7",
+        "on-soft": "#275b4d",
+        "text": "#2f6f5e",
+        "ink": "#a8cfc2"
+      },
+      "slate": {
+        "accent": "#3a5c8c",
+        "strong": "#32507a",
+        "soft": "#e4e9f1",
+        "soft-line": "#bcc7da",
+        "on-soft": "#304b73",
+        "text": "#3a5c8c",
+        "ink": "#adc2dd"
+      },
+      "mulberry": {
+        "accent": "#8a4f6d",
+        "strong": "#78455f",
+        "soft": "#f0e6ec",
+        "soft-line": "#d3bcc8",
+        "on-soft": "#714159",
+        "text": "#8a4f6d",
+        "ink": "#d5aec3"
+      },
+      "olive": {
+        "accent": "#7a6a3f",
+        "strong": "#6a5c37",
+        "soft": "#eeebe0",
+        "soft-line": "#cec7b3",
+        "on-soft": "#645734",
+        "text": "#7a6a3f",
+        "ink": "#cbc19a"
+      }
+    },
+    "dark": {
+      "pine": {
+        "accent": "#2f6f5e",
+        "strong": "#4a8172",
+        "soft": "#152220",
+        "soft-line": "#1e453c",
+        "on-soft": "#97b7ae",
+        "text": "#86aba2",
+        "ink": "#a8cfc2"
+      },
+      "slate": {
+        "accent": "#3a5c8c",
+        "strong": "#526e98",
+        "soft": "#16212e",
+        "soft-line": "#25384f",
+        "on-soft": "#9caec6",
+        "text": "#8da0bc",
+        "ink": "#adc2dd"
+      },
+      "mulberry": {
+        "accent": "#8a4f6d",
+        "strong": "#9b6681",
+        "soft": "#251f28",
+        "soft-line": "#4d3245",
+        "on-soft": "#c4a7b6",
+        "text": "#bb99aa",
+        "ink": "#d5aec3"
+      },
+      "olive": {
+        "accent": "#7a6a3f",
+        "strong": "#8b7e59",
+        "soft": "#231f1f",
+        "soft-line": "#463f2b",
+        "on-soft": "#bcb49f",
+        "text": "#b2a990",
+        "ink": "#cbc19a"
+      }
+    }
+  },
+  "type": {
+    "families": {
+      "serif": "Newsreader, Georgia, 'Times New Roman', serif",
+      "sans": "'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif",
+      "mono": "'IBM Plex Mono', ui-monospace, Menlo, monospace"
+    },
+    "scale": {
+      "small": 0.92,
+      "default": 1,
+      "large": 1.12
+    },
+    "roles": {
+      "view-title": {
+        "size": 27,
+        "weight": 400,
+        "line": 1.15,
+        "family": "serif"
+      },
+      "figure": {
+        "size": 24,
+        "weight": 400,
+        "line": 1,
+        "family": "serif"
+      },
+      "section-title": {
+        "size": 22,
+        "weight": 400,
+        "line": 1.2,
+        "family": "serif"
+      },
+      "agenda-item": {
+        "size": 21,
+        "weight": 400,
+        "line": 1.25,
+        "family": "serif"
+      },
+      "panel-heading": {
+        "size": 17,
+        "weight": 400,
+        "line": 1.2,
+        "family": "serif"
+      },
+      "body": {
+        "size": 13.5,
+        "weight": 400,
+        "line": 1.5,
+        "family": "sans"
+      },
+      "row-title": {
+        "size": 13,
+        "weight": 500,
+        "line": 1.35,
+        "family": "sans"
+      },
+      "secondary": {
+        "size": 12.5,
+        "weight": 400,
+        "line": 1.45,
+        "family": "sans"
+      },
+      "meta": {
+        "size": 11.5,
+        "weight": 400,
+        "line": 1.4,
+        "family": "sans"
+      }
+    }
+  },
+  "space": {
+    "1": 4,
+    "2": 8,
+    "3": 12,
+    "4": 16,
+    "5": 24,
+    "6": 32,
+    "7": 48,
+    "8": 64
+  },
+  "density": {
+    "comfortable": 1,
+    "compact": 0.72
+  },
+  "radius": {
+    "base": 6,
+    "pill": 99,
+    "round": "50%"
+  },
+  "layout": {
+    "railWidth": 246,
+    "statusBarHeight": 30,
+    "breakpoint": 900,
+    "maxWidth": {
+      "list": 840,
+      "panels": 900,
+      "wide": 960
+    }
+  },
+  "motion": {
+    "panel": "180ms ease",
+    "row": "180ms ease",
+    "rail": "180ms ease",
+    "step": 320
+  }
+}
