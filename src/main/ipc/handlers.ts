@@ -1571,8 +1571,8 @@ export function registerHandlers(vault: Vault): void {
     const { provider, key } = providerOrRefuse(r);
     const profile = r.profile();
     let request: AssistantRequest;
-    let about: string | null = null;
-    let reason = '';
+    let about: string;
+    let reason: string;
 
     if (task === 'read-posting') {
       const requisition = r.requisitions().find((one) => one.id === subject)

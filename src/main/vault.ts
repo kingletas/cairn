@@ -35,6 +35,7 @@ function loadKeyring(): Keyring {
     throw new Error(
       'The Cairn key module is not built, so the vault cannot be opened. Run `make build` and try again. ' +
         `(${String(cause)})`,
+      { cause },
     );
   }
 }

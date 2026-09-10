@@ -14,6 +14,23 @@ All notable changes to Cairn are recorded here. The format follows
   joined onto one line before it is published; headings, tables and code are left as
   written. The release page also says which Linux file to take on an ARM machine.
 
+### Changed
+
+- **The key module is built on napi 3, argon2 0.6 and rand 0.10.** A vault made
+  before the upgrade opens after it: a new test derives keys from fixed passphrases
+  and salts and compares them with answers from the Argon2 reference implementation,
+  so a dependency that changed the derivation would fail the build instead of locking
+  anybody out.
+- **Linting moved to eslint 10 and TypeScript to 6.0.** The build scripts are linted
+  now too. The newer rules found three values that were set and never read, and two
+  errors that dropped the error that caused them; both errors now carry their cause.
+- **Three development tools are held on purpose, and a test says when to move each.**
+  The Node types follow the Node inside Electron. TypeScript stops at the newest
+  version typescript-eslint accepts, so it is 6.0 and not 7. The napi crate and the
+  napi command move together, because napi-rs releases them as a matched pair and
+  Dependabot would otherwise move them in separate pull requests.
+- **The workflow actions moved to their current major versions**, all on Node 24.
+
 ## [1.3.0] - 2026-09-10
 
 ### Fixed

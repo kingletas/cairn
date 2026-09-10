@@ -8,6 +8,15 @@ updates:
     open-pull-requests-limit: 2
     groups:
       npm: { patterns: ['*'] }
+    # Each of these follows something else, and tests/unit/toolchain.test.js fails the
+    # day the hold should move.
+    ignore:
+      # The Node types follow the Node inside Electron, not the newest Node.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
+      # TypeScript stops where typescript-eslint's supported range stops.
+      - dependency-name: typescript
+        versions: ['>=6.1']
 
   - package-ecosystem: cargo
     directory: /crates/cairn-keyring

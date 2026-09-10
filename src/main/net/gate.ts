@@ -65,7 +65,6 @@ async function through(
   const timer = setTimeout(() => controller.abort(), options.timeoutMs);
 
   let ok = false;
-  let status = 0;
   let body = '';
   try {
     const response = await fetch(target, {
@@ -75,10 +74,9 @@ async function through(
       signal: controller.signal,
       redirect: 'follow',
     });
-    status = response.status;
     ok = response.ok;
     body = await response.text();
-    return { ok, status, body };
+    return { ok, status: response.status, body };
   } finally {
     clearTimeout(timer);
     options.onRecord({

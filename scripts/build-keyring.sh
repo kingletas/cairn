@@ -20,7 +20,7 @@ cd "$here"
 tmp="$(basename "$(mktemp -d "$here/native.build.XXXXXX")")"
 trap 'rm -rf "$here/${tmp:?}"' EXIT
 
-npx napi build --platform --release --cargo-cwd crates/cairn-keyring --js false "$tmp"
+npx napi build --platform --release --manifest-path crates/cairn-keyring/Cargo.toml --no-js --output-dir "$tmp"
 
 mkdir -p native
 for built in "$tmp"/*; do

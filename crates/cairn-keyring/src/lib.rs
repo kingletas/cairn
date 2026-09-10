@@ -16,7 +16,7 @@
 use argon2::{Algorithm, Argon2, Params, Version};
 use napi::bindgen_prelude::*;
 use napi_derive::napi;
-use rand::RngCore;
+use rand::Rng;
 use std::sync::Mutex;
 use zeroize::Zeroize;
 
@@ -43,7 +43,7 @@ fn argon2() -> Result<Argon2<'static>> {
 #[napi]
 pub fn new_salt() -> String {
     let mut salt = [0u8; SALT_LEN];
-    rand::thread_rng().fill_bytes(&mut salt);
+    rand::rng().fill_bytes(&mut salt);
     hex::encode(salt)
 }
 

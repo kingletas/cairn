@@ -346,7 +346,7 @@ function card(requisition: Requisition): HTMLElement {
   );
 
   on(toggle, 'click', () => {
-    const open = detail.hidden;
+    const open = detail.hidden !== false;
     detail.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
     panel.classList.toggle('open', open);
