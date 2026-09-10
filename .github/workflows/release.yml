@@ -101,17 +101,13 @@ jobs:
             echo
             echo '| You are on | Take |'
             echo '|---|---|'
-            echo '| Linux, anything | the `.AppImage` — make it executable and run it |'
-            echo '| Debian, Ubuntu, Mint | the `.deb` |'
+            echo '| Linux, anything | the `.AppImage` — make it executable and run it; the `arm64` one on an ARM machine |'
+            echo '| Debian, Ubuntu, Mint | the `.deb` for your architecture |'
             echo '| Fedora, RHEL, openSUSE | the `.rpm` |'
             echo '| macOS, Apple silicon | the `arm64.dmg` |'
             echo '| Windows | `Setup.exe`, or the portable `.exe` to run without installing |'
             echo
-            echo '**None of these is signed.** macOS will call the app damaged or from an'
-            echo 'unidentified developer, and Windows SmartScreen will warn before it runs.'
-            echo 'That is what an unsigned build looks like rather than a sign of trouble;'
-            echo '`docs/installing.md` says how to get past each, and building from source'
-            echo 'avoids the question.'
+            echo '**None of these is signed.** macOS will call the app damaged or from an unidentified developer, and Windows SmartScreen will warn before it runs. That is what an unsigned build looks like rather than a sign of trouble; `docs/installing.md` says how to get past each, and building from source avoids the question.'
             echo 'CAIRN_EOF'
           } >> "$GITHUB_OUTPUT"
 

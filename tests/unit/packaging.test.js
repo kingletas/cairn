@@ -1,6 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 /** What a distributable has to contain, checked against what the app reads. */
 const config = readFileSync('electron-builder.yml', 'utf8');
@@ -105,4 +108,31 @@ test('every npm script runs on Windows too', () => {
     if (/(^|&&\s*)[A-Z_]+=\S+\s/.test(body)) broken.push(`${name}: sets a variable the way only a shell understands`);
   }
   assert.deepEqual(broken, [], 'these fail on Windows, where npm runs a script through cmd');
+});
+
+test('release notes put each paragraph on one line, because a release page breaks at every newline', {
+  skip: process.platform === 'win32' && 'the notes are assembled on the Linux publish runner',
+}, () => {
+  const dir = mkdtempSync(join(tmpdir(), 'cairn-notes-'));
+  const changelog = join(dir, 'CHANGELOG.md');
+  writeFileSync(changelog, [
+    '## [Unreleased]', '', '## [9.9.9] - 2030-01-01', '', '### Fixed', '',
+    '- **A wrapped item.** It runs on', '  to a second line.', '    - A nested item', '      that wraps too.', '',
+    'A wrapped', 'paragraph.', '', '```', 'kept', 'as written', '```', '',
+    '| a | b |', '|---|---|', '| 1 | 2 |', '', '## [9.9.8] - 2029-01-01', '', 'Not this one.', '',
+  ].join('\n'));
+  try {
+    const notes = execFileSync('bash', ['packaging/release-notes.sh', '9.9.9'], {
+      env: { ...process.env, CAIRN_CHANGELOG: changelog }, encoding: 'utf8',
+    });
+    assert.ok(notes.includes('- **A wrapped item.** It runs on to a second line.\n'));
+    assert.ok(notes.includes('    - A nested item that wraps too.\n'));
+    assert.ok(notes.includes('\nA wrapped paragraph.\n'));
+    assert.ok(notes.includes('```\nkept\nas written\n```'), 'fenced code was joined');
+    assert.ok(notes.includes('| a | b |\n|---|---|\n| 1 | 2 |'), 'table rows were joined');
+    assert.ok(notes.includes('### Fixed\n'));
+    assert.ok(!notes.includes('Not this one'), 'the next section leaked in');
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });

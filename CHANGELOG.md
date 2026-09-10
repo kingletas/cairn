@@ -6,6 +6,14 @@ All notable changes to Cairn are recorded here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- **Release notes broke off mid-sentence.** A release page turns every newline into a
+  line break, and the notes were copied from this file with its wrapping intact, so
+  each paragraph came out as a column of fragments. Every paragraph and list item is
+  joined onto one line before it is published; headings, tables and code are left as
+  written. The release page also says which Linux file to take on an ARM machine.
+
 ## [1.3.0] - 2026-09-10
 
 ### Fixed
