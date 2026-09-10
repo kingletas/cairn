@@ -8,6 +8,9 @@ All notable changes to Cairn are recorded here. The format follows
 
 ### Fixed
 
+- **The install instructions sent you to a release that isn't there.** The README,
+  *From nothing* and *Installing* now start from building it yourself, and say
+  that ready-made installers come with the next release.
 - **A pay range in another currency was read as yours.** Cairn took the currency from a
   symbol in front of the figures and assumed dollars when it found none, so
   `$155,000—$220,000 CAD` and `155,000—220,000 CAD` were both recorded as US dollars.

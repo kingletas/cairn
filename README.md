@@ -47,15 +47,7 @@ Every request to a provider goes through the same gate a job board does and is c
 
 ## Getting started
 
-**There is a build for Linux, macOS and Windows** on the [latest release](https://github.com/kingletas/cairn/releases/latest) — an AppImage, a `.deb`, an `.rpm`, a `.dmg` for each kind of Mac, and a Windows installer. **None of them is signed**, so macOS and Windows will both say they do not know who made this; [docs/installing.md](docs/installing.md) says which file to take and how to get past each warning.
-
-Or build it, which is the version with nothing to take on trust. You need **Node 22.12 or newer**, a **Rust toolchain**, and a **C compiler**.
-
-`make package` writes installers for the machine you are on into `release/`. It builds only for that machine: the Rust key module and the database binding are compiled against the host and neither cross-builds, which is why a release is built once on each operating system.
-
-If the graphics driver takes the window down, Cairn starts again without the graphics card, remembers, and says so. `cairn --try-graphics` undoes that and `cairn --crashes` prints what it recorded. Both work whether you installed a package or built it here.
-
-**Upgrading an existing install?** [docs/upgrading.md](docs/upgrading.md) carries every change that asks something of you, and Cairn says so on the lock screen when one applies.
+**Build it from this repository.** You need **Node 22.12 or newer**, a **Rust toolchain**, and a **C compiler**.
 
 ```bash
 git clone https://github.com/kingletas/cairn.git
@@ -71,9 +63,15 @@ That builds it and puts a `cairn` command on your PATH, with a desktop entry so 
 cairn
 ```
 
-Cairn opens on a setup screen, because a fresh install has nothing in it. You choose a passphrase, say what kind of work you are looking for, and everything after that is yours.
+Cairn opens on a setup screen, because a fresh install has nothing in it. You choose a passphrase, say what kind of work you're looking for, and everything after that is yours.
 
 `cairn --rebuild` builds again after a `git pull`, `cairn --where` prints where the code and your vault live, and `make uninstall` removes the launcher without touching the vault.
+
+**There are no ready-made installers yet.** When a release is published it will carry an AppImage, a `.deb`, an `.rpm`, a `.dmg` for each kind of Mac and a Windows installer, none of them signed; [docs/installing.md](docs/installing.md) says which file to take and how to get past each warning. Until then, `make package` writes installers for the machine you're on into `release/`. It builds only for that machine: the Rust key module and the database binding are compiled against the host and neither cross-builds, which is why a release is built once on each operating system.
+
+If the graphics driver takes the window down, Cairn starts again without the graphics card, remembers, and says so. `cairn --try-graphics` undoes that and `cairn --crashes` prints what it recorded. Both work whether you installed a package or built it here.
+
+**Upgrading an existing install?** [docs/upgrading.md](docs/upgrading.md) carries every change that asks something of you, and Cairn says so on the lock screen when one applies.
 
 **A longer walkthrough, written for somebody who has never seen this before, is in [docs/from-nothing.md](docs/from-nothing.md).**
 
