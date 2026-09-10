@@ -6,6 +6,8 @@ All notable changes to Cairn are recorded here. The format follows
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-09-10
+
 ### Fixed
 
 - **Release notes broke off mid-sentence.** A release page turns every newline into a
@@ -1202,8 +1204,6 @@ The first cut: a vault, a setup flow, and the screens that read a posting.
   sixteen-family job taxonomy; three cover letter and two résumé skeletons; and the
   questions application forms ask, without answers.
 
-[Unreleased]: https://github.com/kingletas/cairn/compare/v1.2.0...HEAD
-[1.2.0]: https://github.com/kingletas/cairn/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/kingletas/cairn/compare/v1.0.0...v1.1.0
-[1.0.0]: https://github.com/kingletas/cairn/compare/v0.1.0...v1.0.0
-[0.1.0]: https://github.com/kingletas/cairn/releases/tag/v0.1.0
+[Unreleased]: https://github.com/kingletas/cairn/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/kingletas/cairn/compare/v1.3.0...v1.4.0
+[1.3.0]: https://github.com/kingletas/cairn/releases/tag/v1.3.0
