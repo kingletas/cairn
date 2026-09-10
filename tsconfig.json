@@ -2,7 +2,6 @@
   "compilerOptions": {
     // better-sqlite3-multiple-ciphers ships types and its exports map does not
     // declare them, so the compiler is pointed at the file directly.
-    "baseUrl": ".",
     "paths": {
       "better-sqlite3-multiple-ciphers": ["./node_modules/better-sqlite3-multiple-ciphers/index.d.ts"]
     },

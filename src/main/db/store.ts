@@ -48,6 +48,7 @@ function openDatabase(path: string): Db {
         'The database module was built for a different runtime than the one Cairn is ' +
           'running on, so the vault cannot be opened. Run `npm run rebuild` and start ' +
           'Cairn again.',
+        { cause },
       );
     }
     throw cause;
