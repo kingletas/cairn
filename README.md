@@ -67,9 +67,9 @@ Cairn opens on a setup screen, because a fresh install has nothing in it. You ch
 
 `cairn --rebuild` builds again after a `git pull`, `cairn --where` prints where the code and your vault live, and `make uninstall` removes the launcher without touching the vault.
 
-**There are no ready-made installers yet.** When a release is published it will carry an AppImage, a `.deb`, an `.rpm`, a `.dmg` for each kind of Mac and a Windows installer, none of them signed; [docs/installing.md](docs/installing.md) says which file to take and how to get past each warning.
+**Ready-made installers** for Linux, macOS and Windows are on the [latest release](https://github.com/kingletas/cairn/releases/latest): an AppImage, a `.deb`, an `.rpm`, a `.dmg` for Apple silicon Macs and a Windows installer. **None of them is signed**, so macOS and Windows will both say they don't know who made this; [docs/installing.md](docs/installing.md) says which file to take and how to get past each warning.
 
-Until then, `make package` writes installers for the machine you're on into `release/`. It builds only for that machine: the Rust key module and the database binding are compiled against the host and neither cross-builds, which is why a release is built once on each operating system.
+To make installers yourself, `make package` writes them for the machine you're on into `release/`. It builds only for that machine: the Rust key module and the database binding are compiled against the host and neither cross-builds, which is why a release is built once on each operating system.
 
 If the graphics driver takes the window down, Cairn starts again without the graphics card, remembers, and says so. `cairn --try-graphics` undoes that and `cairn --crashes` prints what it recorded. Both work whether you installed a package or built it here.
 

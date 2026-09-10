@@ -1,6 +1,6 @@
 # Installing Cairn
 
-Cairn runs on Linux, macOS and Windows. **No release is published right now**, so build it from source as the [README](../README.md#getting-started) shows. When a release exists it carries a file for each system; take the one for your machine from the [releases page](https://github.com/kingletas/cairn/releases).
+Cairn runs on Linux, macOS and Windows. Every release carries a file for each; take the one for your machine from the [latest release](https://github.com/kingletas/cairn/releases/latest).
 
 | You are on | Take |
 |---|---|

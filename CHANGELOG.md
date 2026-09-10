@@ -6,11 +6,10 @@ All notable changes to Cairn are recorded here. The format follows
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-09-10
+
 ### Fixed
 
-- **The install instructions sent you to a release that isn't there.** The README,
-  *From nothing* and *Installing* now start from building it yourself, and say
-  that ready-made installers come with the next release.
 - **A pay range in another currency was read as yours.** Cairn took the currency from a
   symbol in front of the figures and assumed dollars when it found none, so
   `$155,000—$220,000 CAD` and `155,000—220,000 CAD` were both recorded as US dollars.
@@ -91,6 +90,9 @@ All notable changes to Cairn are recorded here. The format follows
 
 ### Changed
 
+- **Every workflow pins its actions to a commit**, with the version beside it, so a
+  tag moved upstream can't change what a release is built with. Dependabot moves the
+  pin and the version together.
 - **The paid runners left routine CI.** A macOS minute is billed at ten and a Windows
   minute at two, and the cross-platform matrix ran on every push and every dependabot
   pull request — twelve of those were open at once. Linux still checks and tests every

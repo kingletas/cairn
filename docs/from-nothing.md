@@ -4,7 +4,7 @@ This is for somebody who has never seen Cairn. By the end you will have it runni
 
 ## What you need first
 
-**There are no ready-made installers yet.** Once a release is published, you'll be able to take the file for your machine from the [releases page](https://github.com/kingletas/cairn/releases) instead — [docs/installing.md](installing.md) says which, and what the unsigned warnings on macOS and Windows mean — and skip to *Choose a passphrase*.
+**If you only want to run it**, take the file for your machine from the [latest release](https://github.com/kingletas/cairn/releases/latest) — [docs/installing.md](installing.md) says which, and what the unsigned warnings on macOS and Windows mean. Then skip to *Choose a passphrase*.
 
 The rest of this page builds it from source, which is the version with nothing to take on trust. You need three things:
 
