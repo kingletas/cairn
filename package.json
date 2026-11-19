@@ -36,18 +36,18 @@
     "rebuild": "electron-rebuild -f -w better-sqlite3-multiple-ciphers"
   },
   "dependencies": {
-    "better-sqlite3-multiple-ciphers": "^13.0.3"
+    "better-sqlite3-multiple-ciphers": "^13.1.1"
   },
   "devDependencies": {
-    "@electron/rebuild": "^4.2.0",
+    "@electron/rebuild": "^4.2.1",
     "@eslint/js": "^10.0.1",
-    "@napi-rs/cli": "^3.9.1",
-    "@types/node": "^24.9.0",
-    "electron": "^44.2.0",
-    "electron-builder": "^26.15.3",
-    "eslint": "^10.10.0",
-    "globals": "^17.12.0",
+    "@napi-rs/cli": "^3.10.12",
+    "@types/node": "^24.19.2",
+    "electron": "^45.3.3",
+    "electron-builder": "^26.18.0",
+    "eslint": "^10.15.0",
+    "globals": "^17.14.0",
     "typescript": "~6.0.3",
-    "typescript-eslint": "^8.70.0"
+    "typescript-eslint": "^8.72.2"
   }
 }
